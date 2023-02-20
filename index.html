@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/styles/base.css">
+	<script src="/src/dom.js" type="module"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+	<title>Pokemon team manager</title>
+</head>
+<body>
+	<header id="main-header">
+		<div class="top-header">
+		<img src="/img/pokemon h1.png" alt="pokemon.logga" id="headline">
+		<h3 id="header-h3">Team manager</h3>
+	</div>
+		<div id="header-buttons">
+		<button id="find-champions">Find champions</button>
+		<button id="team-pokemons">My team</button>
+	</div>
+	<div id="search">
+		<input type="text" id="search-bar" placeholder="Search">
+	</div>
+	</header>
+	<section id="choose-pokemons">
+		<div class="champion">
+			<h2>Bulbasaur</h2>
+			<div class="image"></div>
+			<p id="type-of-pokemon">Type: Grass</p>
+			<button id="add-champ">Add champion to team</button>
+		</div>
+	</section>
+	<section id="my-team">
+		<div class="champion">
+			<h2>Bulbasaur</h2>
+			<div class="image"></div>
+			<div class="champion-text">
+				<button id="add-champ">Add champion to team</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

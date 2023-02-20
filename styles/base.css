@@ -1,0 +1,63 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Bebas Neue', cursive;
+    
+}
+body{
+	background-color: #2B292C;
+}
+div{
+	border-radius: 1em;
+}
+#headline{
+	width: 10em;
+	
+}
+#header-h3{
+	color: aliceblue;
+}
+#main-header{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	height: 8em;
+}
+.top-header{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-shadow: #2B292C;
+}
+#choose-pokemons{
+	display: flex;
+	justify-content: center;
+}
+#my-team{
+	display: flex;
+	justify-content: center;
+	visibility: hidden;
+}
+.champion{
+	height: 15em;
+	width: 15em;
+	background-color: #68A890;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 1em;
+	box-shadow: 6.5px 13.0px 13.0px hsl(0deg 0% 0% / 0.10); 
+	border: 1px solid black;
+}
+.image {
+	height: 5em;
+	width: 5em;
+	border: 1px solid black;
+}
+button{
+	padding: 0.25em 0.5em;
+	box-shadow: 6.5px 13.0px 13.0px hsl(0deg 0% 0% / 0.10);
+}
