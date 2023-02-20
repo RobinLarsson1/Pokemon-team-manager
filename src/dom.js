@@ -13,15 +13,15 @@ findChampionButton.addEventListener('click', () => {
 	choosePokemonSection.style.visibility = "visible"
 	myTeamSection.style.visibility = "hidden"
 })
-searchButton.addEventListener('click', async() => {
-	const baseUrl = 'https://pokeapi.co/api/v2/pokemon'
-	const response = await fetch(baseUrl)
-	const data = await response.json()
+// searchButton.addEventListener('click', async() => {
+// 	const baseUrl = 'https://pokeapi.co/api/v2/pokemon'
+// 	const response = await fetch(baseUrl)
+// 	const data = await response.json()
 
-	data.results.forEach(pokemon => {
-		console.log(pokemon.name)
-	})
+// 	data.results.forEach(pokemon => {
+// 		console.log(pokemon.name)
+// 	})
 
-	console.log(data)
+// 	console.log(data)
 
-})
+// })

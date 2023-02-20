@@ -19,6 +19,7 @@ div{
 }
 #header-h3{
 	color: aliceblue;
+	letter-spacing: 1px;
 }
 #find-champions, #team-pokemons{
 	transition: all 0.3ms;
