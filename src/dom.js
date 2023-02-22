@@ -1,3 +1,4 @@
+//Variablar
 const choosePokemonSection = document.getElementById('choose-pokemons')
 const myTeamSection = document.getElementById('my-team')
 const findChampionButton = document.getElementById('find-champions')
@@ -8,10 +9,14 @@ const pokeOl = document.getElementById('pokeol')
 const findPokemonInput = document.getElementById('search-bar')
 const pokemonContainer = document.getElementById('main-container');
 
+
+//Gör så att det laddas in vid load
 window.addEventListener('load', function() {
 	displayPokemon();
   });
 
+
+//Olika "sidor"
 myTeamButton.addEventListener('click', () => {
 	choosePokemonSection.style.visibility = "hidden"
 	myTeamSection.style.visibility = "visible"
@@ -29,6 +34,7 @@ findChampionButton.addEventListener('click', () => {
 
   const displayPokemon = () => {
 	const pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+	pokemonContainer.innerHTML = "";
 
 	pokemonList.forEach(pokemon => {
 		const pokemonDiv = document.createElement('div');
@@ -52,6 +58,17 @@ findChampionButton.addEventListener('click', () => {
 		pokeAdd.addEventListener('click', () => {
 			addPokemonToTeam(pokemon);
 		});
+
+		//    Change background color based on type
+		pokeAdd.addEventListener('click', () => {
+			let addedToTeam = document.createElement('p');
+			addedToTeam.textContent = 'Added to team!';
+			pokemonDiv.append(addedToTeam);
+		  
+			setTimeout(() => {
+			addedToTeam.remove();
+			}, 1500);
+		});
 		
 		pokemonDiv.append(pokemonImg)
 		pokemonDiv.append(pokemonName)
@@ -61,43 +78,44 @@ findChampionButton.addEventListener('click', () => {
 
 		pokemonContainer.append(pokemonDiv)
 	})
+
 }
 
 
 let pokemonList = []
 // const LS_KEY = 'pokemon';
-//hämtar info 
 
+
+//hämtar info 
 const fetchPokemon = () => {
 	const baseUrl = 'https://pokeapi.co/api/v2/pokemon/';
 	const pokemonList = [];
-  
+
 	for (let i = 1; i <= 151; i++) {
-	  const url = `${baseUrl}${i}`;
-	  fetch(url)
+	const url = `${baseUrl}${i}`;
+	fetch(url)
 		.then(response => response.json())
 		.then(data => {
-		  const pokemon = {
+		const pokemon = {
 			name: data.name,
 			image: data.sprites['front_default'],
 			type: data.types.map(type => type.type.name).join(', '),
 			abilities: data.abilities.map(ability => ability.ability.name).join(', ')
-		  };
-		  pokemonList.push(pokemon);
+		};
+		pokemonList.push(pokemon);
   
-		  // Save the list to local storage
-		  localStorage.setItem('pokemonList', JSON.stringify(pokemonList));
+		// Sparar data till localStorage
+		localStorage.setItem('pokemonList', JSON.stringify(pokemonList));
 		})
 		.catch(error => console.error(error));
 	}
-	console.log(pokemonList)
-  };
-  // Call the function to fetch and save the data
-  fetchPokemon();
+};
+  //Kallar på funktionen för att hämta samt spara data
+fetchPokemon();
 
 
-  findPokemonInput.addEventListener('keypress', async (event) => {
-    if (event.key === 'Enter') {
+findPokemonInput.addEventListener('input', async (event) => {
+
         const searchString = findPokemonInput.value;
         pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
 
@@ -125,24 +143,24 @@ const fetchPokemon = () => {
     });
         });
     }
-});
+);
 
 //lägger till pokemons i separat LS
 const addPokemonToTeam = (pokemon) => {
 	let myTeam = JSON.parse(localStorage.getItem('myTeam')) || [];
 
 	// Kollar om pokemonen redan finns i laget
-	if (Object.keys(myTeam).length < 3) {
+	if (Object.keys(myTeam).length <= 3) {
+		console.log('You already have 3 champions in your team!')
 		if (!myTeam[pokemon.name]) {
-			console.log('You already have 3 champions in your team!')
 		  // Add the pokemon object to myTeamList object using the pokemon name as the key
-		  myTeam[pokemon.name] = pokemon;
+		    myTeam[pokemon.name] = pokemon;
 		}
 	
-	// Add the selected Pokemon to the team array
+	// Lägger till pokemon till lagArrayen
 	myTeam.push(pokemon);
 
-	// Save the team array to local storage
+	// Sparar lagarrayen i LS
 	localStorage.setItem('myTeam', JSON.stringify(myTeam));
 	console.log('Pokemon added to team!');
 }};
@@ -151,13 +169,13 @@ const addPokemonToTeam = (pokemon) => {
 
 
 const displayMyTeam = () => {
-	// Get the "myTeam" array from local storage
+	// Hämta lagarrayen från
 	const myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
 
-	// Clear the contents of the "main-container" div
+	// Rensar content som ligger i diven innan
 	pokemonContainer.innerHTML = "";
 
-	// Loop through the Pokemon in the "myTeam" array and display them
+	// Loopar genom de pokemon i myteam och displayar dom
 	myTeam.forEach((pokemon, index) => {
 	const pokemonDiv = document.createElement("div");
 	pokemonDiv.classList.add("pokemoncard");
@@ -188,6 +206,7 @@ const displayMyTeam = () => {
 		pokemonContainer.removeChild(pokemonDiv);
 		localStorage.setItem("myTeam", JSON.stringify(myTeam));
 	});
+
 	
 	pokemonDiv.append(pokemonImg);
 	pokemonDiv.append(pokemonName);
@@ -204,3 +223,6 @@ const displayMyTeam = () => {
 
 
 //displaya infon
+
+
+//om display pokemon körs, 

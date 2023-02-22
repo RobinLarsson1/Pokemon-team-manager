@@ -6,7 +6,8 @@
     
 }
 body{
-	background-color: #D9D8D7;
+	background-color: #ecebeb;
+	height: 100vh;
 }
 
 /* header */
@@ -22,8 +23,9 @@ body{
 	transition: all 0.3ms;
 	
 }
-#find-champions:hover, #team-pokemons:hover{
-	background-color: #FFCB05;
+button:hover{
+	background-color: #3368B1;
+	color: #FFCB05;
 	
 }
 #main-header{
@@ -52,6 +54,10 @@ body{
 }
 button{
 	padding: 0.25em 0.5em;
+	cursor: pointer;
+	transition: all 0.5s;
+	border-radius: 0.25em;
+	border: 2px solid #3368B1;
 }
 .removefromteam{
 	color: red;
@@ -61,31 +67,41 @@ button{
 	justify-content: center;
 }
 .pokemoncard{
-	margin: 1em;
+	margin: 2em;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 15em;
-	background-color: #f5f5f5;
-	height: 20em;
+	width: 16em;
+	background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+	height: 21em;
+	border-radius: 0.5em;
+	transition: all 0.5s;
+	border: 8px solid #FFCB05;
+	box-shadow: 4.6px 9.3px 9.3px hsl(0deg 0% 0% / 0.36);
+}
+.pokemoncard:hover{
+	transform: scale(1.05);
+
 }
 .pokemoncard > p {
-    margin: 0.5em;
+    margin: 0 0.25em 0.5em; 
 	text-align: center;
 }
-.pokemoncard.grass {
-	background-color: #72DCB9;
-  }
 img{
 	width: 10em;
 }
-@media screen and (min-width: 500px) {
+
+
+@media screen and (min-width: 560px) {
 	#main-container {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: center;
+	}
+	#headline {
+		width: 15em;
 	}
 }
