@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/styles/base.css">
 	<script src="/src/dom.js" type="module"></script>
+	<script src="/src/storage.js" type="module"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -25,28 +26,19 @@
 	<section id="choose-pokemons">
 		<div id="search">
 			<input type="text" id="search-bar" placeholder="Search">
-			<button id="search-button">Sök</button>
-		</div>
-		<div class="champion">
-			<h2 id="name">Bulbasaur</h2>
-			<div class="image"></div>
-			<p id="type-of-pokemon">Type: Grass</p>
-			<button id="add-champ">Add champion to team</button>
-		</div>
-		<div class="champion" id="fire">
-			<h2 id="name">Charmander</h2>
-			<div class="image"></div>
-			<p id="type-of-pokemon">Type: Fire</p>
-			<button id="add-champ">Add champion to team</button>
 		</div>
 	</section>
+	<section id="pokediv" class="pokediv">
+	<div id="main-container"></div>
+</section>
 	<section id="my-team">
 		<div class="champion">
-			<h2>Bulbasaur</h2>
-			<div class="image"></div>
-			<div class="champion-text">
-				<button id="kick-champ">Kick from team</button>
-			</div>
+			<div id="poke_img"></div>
+			<div id="champ-text">
+			<h2 id="name"></h2>
+			<p id="type-of-pokemon"></p>
+		</div>
+			
 		</div>
 	</section>
 </body>
