@@ -33,63 +33,63 @@ findChampionButton.addEventListener('click', () => {
 //skapar dynamiskt divvar med all info
 
 const displayPokemon = () => {
-	const pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
-	const myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
-	pokemonContainer.innerHTML = "";
+    const pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+    const myTeam = JSON.parse(localStorage.getItem('myTeam')) || [];
+    pokemonContainer.innerHTML = '';
 
-	pokemonList.forEach(pokemon => {
-		const pokemonDiv = document.createElement('div');
-		pokemonDiv.classList.add('pokemoncard')
+    pokemonList.forEach((pokemon) => {
+        const pokemonDiv = document.createElement('div');
+        pokemonDiv.classList.add('pokemoncard');
 
-		const pokemonName = document.createElement('h2')
-		pokemonName.textContent = pokemon.name;
+        const pokemonName = document.createElement('h2');
+        pokemonName.textContent = pokemon.name;
 
-		const pokemonTypeText = document.createElement('span')
-		pokemonTypeText.innerHTML = "<b>Type: </b>" + pokemon.type;
+        const pokemonTypeText = document.createElement('span');
+        pokemonTypeText.innerHTML = '<b>Type: </b>' + pokemon.type;
 
-		const pokemonImg = document.createElement('img')
-		pokemonImg.src = pokemon.image;
+        const pokemonImg = document.createElement('img');
+        pokemonImg.src = pokemon.image;
 
-        const abilitiesText = document.createElement('span')
-        abilitiesText.innerHTML = "<b>Abilities:</b> " + pokemon.abilities;
+        const abilitiesText = document.createElement('span');
+        abilitiesText.innerHTML = '<b>Abilities:</b> ' + pokemon.abilities;
 
-		const pokeAdd = document.createElement('button')
-		pokeAdd.classList.add('addpokemon')
-		pokeAdd.textContent = 'Add to team'
-		pokeAdd.addEventListener('click', () => {
-			addPokemonToTeam(pokemon);
-			let addedToTeam = document.createElement('p');
-			addedToTeam.classList.add('added-text')
-			addedToTeam.textContent = 'Added to team!';
-			pokemonDiv.append(addedToTeam);
-			setTimeout(() => {
-			addedToTeam.remove();
-			}, 1000);
-		});
+        const pokeAdd = document.createElement('button');
+        pokeAdd.classList.add('addpokemon');
+        pokeAdd.textContent = 'Add to team';
+        pokeAdd.addEventListener('click', () => {
+            if (myTeam.length < 3) {
+                addPokemonToTeam(pokemon);
+                myTeam.push(pokemon);
+                localStorage.setItem('myTeam', JSON.stringify(myTeam));
+                let addedToTeam = document.createElement('p');
+                addedToTeam.classList.add('added-text');
+                addedToTeam.textContent = 'Added to team!';
+				addedToTeam.style.color = 'Green'
+                pokemonDiv.append(addedToTeam);
+                setTimeout(() => {
+                    addedToTeam.remove();
+                }, 1000);
+            } else {
+                let teamFull = document.createElement('p');
+                teamFull.classList.add('added-text');
+                teamFull.textContent = 'Your team is full!';
+				teamFull.style.color = 'red'
+                pokemonDiv.append(teamFull);
+                setTimeout(() => {
+                    teamFull.remove();
+                }, 1000);
+            }
+        });
 
+        pokemonDiv.append(pokemonImg);
+        pokemonDiv.append(pokemonName);
+        pokemonDiv.append(pokemonTypeText);
+        pokemonDiv.append(abilitiesText);
+        pokemonDiv.append(pokeAdd);
 
-		pokemonDiv.append(pokemonImg)
-		pokemonDiv.append(pokemonName)
-		pokemonDiv.append(pokemonTypeText)
-		pokemonDiv.append(abilitiesText)
-		pokemonDiv.append(pokeAdd)
-
-		pokemonContainer.append(pokemonDiv)
-	})
-
-}
-
-
-const fullTeam = () => {
-	let myTeam = [];
-	pokeAdd.addEventListener('click', () => {
-	if(myTeam.length === 3) {
-		let teamFullText = document.createElement('h2')
-		teamFullText.textContent = 'Your team is full!';
-		teamFullText.classList.add('empty-team-text')
-		pokemonDiv.append(teamFullText)
-	}
-})}
+        pokemonContainer.append(pokemonDiv);
+    });
+};
 
 
 
@@ -112,6 +112,7 @@ const fetchPokemon = () => {
 					image: data.sprites['front_default'],
 					type: data.types.map(type => type.type.name).join(', '),
 					abilities: data.abilities.map(ability => ability.ability.name).join(', ')
+					
 				};
 				pokemonList.push(pokemon);
 
@@ -143,8 +144,8 @@ findPokemonInput.addEventListener('input', async (event) => {
             pokemonDiv.innerHTML = 
             `<h2>${pokemon.name}</h2>
             <img src="${pokemon.image}" alt="${pokemon.name}">
-            <p>Type: ${pokemon.type}</p>
-            <p>Ability: ${pokemon.abilities}</p> 
+            <p><b>Type:</b> ${pokemon.type}</p>
+            <p><b>Ability:</b> ${pokemon.abilities}</p> 
 			<button class="addpokemon"> Add pokemon to team </button>`;
 
             pokemonContainer.append(pokemonDiv);
@@ -182,85 +183,111 @@ const addPokemonToTeam = (pokemon) => {
 
 
 const displayMyTeam = () => {
-	// Hämta lagarrayen från
-	const myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
+  // Hämta lagarrayen från
+const myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
 
-	// Rensar content som ligger i diven innan
-	pokemonContainer.innerHTML = "";
+  // Rensar content som ligger i diven innan
+pokemonContainer.innerHTML = "";
 
-	const teamHeader = document.createElement('h1')
-	teamHeader.classList.add('team-header')
-	teamHeader.textContent = 'My team'
+const teamHeader = document.createElement('h1')
+teamHeader.classList.add('team-header')
+teamHeader.textContent = 'My team'
 
-    pokemonContainer.append(teamHeader)
+pokemonContainer.append(teamHeader)
+
+  // Loopar genom de pokemon i myteam och displayar dom
+myTeam.forEach((pokemon, index) => {
+
+    const pokemonDiv = document.createElement("div");
+    pokemonDiv.classList.add("pokemoncard");
+
+    const pokemonName = document.createElement("h2");
+    pokemonName.textContent = pokemon.name;
+
+    const pokemonTypeText = document.createElement('span')
+    pokemonTypeText.innerHTML = "<b>Type: </b>" + pokemon.type;
+
+    const pokemonImg = document.createElement('img')
+    pokemonImg.src = pokemon.image;
 
 
+    const abilitiesText = document.createElement('span');
+    abilitiesText.innerHTML = "<b>Abilities:</b> " + pokemon.abilities;
 
-	// Loopar genom de pokemon i myteam och displayar dom
-	myTeam.forEach((pokemon, index) => {
-		
-	const pokemonDiv = document.createElement("div");
-	pokemonDiv.classList.add("pokemoncard");
+    const removeFromTeam = document.createElement("button");
+    removeFromTeam.classList.add('addpokemon')
+    removeFromTeam.textContent = "Remove from team";
 
+    removeFromTeam.addEventListener("click", () => {
+    for (let i = myTeam.length - 1; i >= 0; i--) {
+        if (myTeam[i].name === pokemon.name) {
+        myTeam.splice(i, 1);
+        break;
+        }
+    }
+    pokemonContainer.removeChild(pokemonDiv);
+    localStorage.setItem("myTeam", JSON.stringify(myTeam));
+      // Kontrollera om vi nu har ett tomt lag och lägg till meddelandet om det är fallet
+    if (myTeam.length === 0) {
+        displayEmptyTeamText();
+    }
+    });
 
-	const pokemonName = document.createElement("h2");
-	pokemonName.textContent = pokemon.name;
+    pokemonDiv.append(pokemonImg);
+    pokemonDiv.append(pokemonName);
+    pokemonDiv.append(pokemonTypeText);
+    pokemonDiv.append(abilitiesText);
+    pokemonDiv.append(removeFromTeam);
 
-	const pokemonType = document.createElement('p')
-		const pokemonTypeText = document.createElement('span')
-		pokemonTypeText.innerHTML = "<b>Type: </b>" + pokemon.type;
+    pokemonContainer.append(pokemonDiv);
+});
 
-		const pokemonImg = document.createElement('img')
-		pokemonImg.src = pokemon.image;
-
-		const pokeAbility = document.createElement('p');
-        const abilitiesText = document.createElement('span');
-        abilitiesText.innerHTML = "<b>Abilities:</b> " + pokemon.abilities;
-
-	const removeFromTeam = document.createElement("button");
-	removeFromTeam.classList.add('addpokemon')
-	removeFromTeam.textContent = "Remove from team";
-
-	removeFromTeam.addEventListener("click", () => {
-		for (let i = myTeam.length - 1; i >= 0; i--) {
-			if (myTeam[i].name === pokemon.name) {
-			  myTeam.splice(i, 1);
-			  break;
-			}
-		}
-		pokemonContainer.removeChild(pokemonDiv);
-		localStorage.setItem("myTeam", JSON.stringify(myTeam));
-	});
-
-	pokemonDiv.append(pokemonImg);
-	pokemonDiv.append(pokemonName);
-	pokemonDiv.append(pokemonTypeText);
-	pokemonDiv.append(abilitiesText);
-	pokemonDiv.append(removeFromTeam);
-
-	pokemonContainer.append(pokemonDiv);
-	});
-
-	if(myTeam.length > 0 && myTeam.length < 3) {
-		let emptyTeamText = document.createElement('h2')
-		emptyTeamText.innerHTML = 'Please choose 3 pokemons to complete your team!';
-		emptyTeamText.classList.add('empty-team-text')
-		pokemonContainer.append(emptyTeamText)
+  // Kontrollera om vi har mindre än tre pokemon i laget och lägg till meddelandet om det är fallet
+  
+  // Kontrollera om laget är tomt och lägg till meddelandet om det är fallet
+  if (myTeam.length === 0) {
+	  displayEmptyTeamText();
+	  
 	}
-//hjälper användaren komma ihåg att välja pokemons
-	if(myTeam.length === 0) {
-		let emptyTeamText = document.createElement('h2')
-		emptyTeamText.innerHTML = 'Your team is empty! Go to <span style="color: #FFCB05">Find Champions</span> to choose your Pokémons';
-		emptyTeamText.classList.add('empty-team-text')
-		pokemonContainer.append(emptyTeamText)
+	if (myTeam.length > 0 && myTeam.length < 3) {
+		displayIncompleteTeamText();
 	}
 };
 
+// Hjälpfunktioner för att lägga till meddelanden till DOM
+
+const displayEmptyTeamText = () => {
+  let emptyTeamText = document.createElement('h2')
+  emptyTeamText.innerHTML = 'Your team is empty! Go to <span style="color: #FFCB05">Find Champions</span> to choose your Pokémons';
+  emptyTeamText.classList.add('empty-team-text')
+  pokemonContainer.append(emptyTeamText)
+}
+
+const displayIncompleteTeamText = () => {
+  let incompleteTeamText = document.createElement('h2')
+  incompleteTeamText.innerHTML = 'Please choose 3 pokemons to complete your team!';
+  incompleteTeamText.classList.add('incomplete-team-text')
+  pokemonContainer.append(incompleteTeamText)
+}
 
 
 
 
-//displaya infon
+
+//ee
+const pokeBall = document.getElementById('pokeball')
+const easterEgg = document.getElementById('easteregg')
+
+
+
+pokeBall.addEventListener('click', function() {
+	pokeBall.style.visibility = "hidden";
+	easterEgg.style.visibility = "visible";
+  });
+easterEgg.addEventListener('click', function() {
+	easterEgg.style.visibility = "hidden";
+	pokeBall.style.visibility = "visible";
+  });
 
 
 //om display pokemon körs, 
