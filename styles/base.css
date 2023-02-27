@@ -62,6 +62,12 @@ button{
 #pokediv {
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
+}
+#reserve-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 .pokemoncard{
 	margin: 2em;

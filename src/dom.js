@@ -8,6 +8,8 @@ const championDiv = document.getElementById('champion')
 const pokeOl = document.getElementById('pokeol')
 const findPokemonInput = document.getElementById('search-bar')
 const pokemonContainer = document.getElementById('main-container');
+const reservesContainer = document.getElementById('reserves-container')
+const reservePokemons = document.getElementById('reserve-pokemons')
 
 
 //Gör så att det laddas in vid load
@@ -20,13 +22,16 @@ window.addEventListener('load', function() {
 myTeamButton.addEventListener('click', () => {
 	findPokemonInput.style.visibility = "hidden"
 	myTeamSection.style.visibility = "visible"
-
 	displayMyTeam();
 })
 findChampionButton.addEventListener('click', () => {
 	findPokemonInput.style.visibility = "visible"
 	myTeamSection.style.visibility = "hidden"
 	displayPokemon();
+})
+reservePokemons.addEventListener('click', () => {
+  myTeamSection.style.visibility = "visible"
+  displayMyReserves();
 })
 
 
@@ -35,6 +40,7 @@ findChampionButton.addEventListener('click', () => {
 const displayPokemon = () => {
     const pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
     const myTeam = JSON.parse(localStorage.getItem('myTeam')) || [];
+    const myReserves = JSON.parse(localStorage.getItem('myReserves')) || []
     pokemonContainer.innerHTML = '';
 
     pokemonList.forEach((pokemon) => {
@@ -53,9 +59,16 @@ const displayPokemon = () => {
         const abilitiesText = document.createElement('span');
         abilitiesText.innerHTML = '<b>Abilities:</b> ' + pokemon.abilities;
 
+        const buttonDiv = document.createElement('div')
+
         const pokeAdd = document.createElement('button');
         pokeAdd.classList.add('addpokemon');
         pokeAdd.textContent = 'Add to team';
+
+        const reserveAdd = document.createElement('button')
+        reserveAdd.classList.add('pokereserve')
+        reserveAdd.textContent = 'Add as reserve'
+
         pokeAdd.addEventListener('click', () => {
             if (myTeam.length < 3) {
                 addPokemonToTeam(pokemon);
@@ -81,11 +94,20 @@ const displayPokemon = () => {
             }
         });
 
+        reserveAdd.addEventListener('click', () => {
+          addPokemonToReserves(pokemon)
+          myReserves.push(pokemon)
+          localStorage.setItem('myReserves', JSON.stringify(myReserves))
+          
+      });
+
         pokemonDiv.append(pokemonImg);
         pokemonDiv.append(pokemonName);
         pokemonDiv.append(pokemonTypeText);
         pokemonDiv.append(abilitiesText);
-        pokemonDiv.append(pokeAdd);
+        pokemonDiv.append(buttonDiv)
+        buttonDiv.append(pokeAdd)
+        buttonDiv.append(reserveAdd)
 
         pokemonContainer.append(pokemonDiv);
     });
@@ -164,7 +186,6 @@ const addPokemonToTeam = (pokemon) => {
 
 	// Kollar om pokemonen redan finns i laget
 	if (Object.keys(myTeam).length < 3) {
-		console.log('You already have 3 champions in your team!')
 		if (!myTeam[pokemon.name]) {
 		  // Add the pokemon object to myTeamList object using the pokemon name as the key
 		    myTeam[pokemon.name] = pokemon;
@@ -178,6 +199,19 @@ const addPokemonToTeam = (pokemon) => {
 
 	
 }};
+
+
+//lägger till i reserver
+const addPokemonToReserves = (pokemon) => {
+  let myReserves = JSON.parse(localStorage.getItem('myReserves')) || [];
+  if (!myReserves[pokemon.name]) {
+    myReserves[pokemon.name] = pokemon;
+
+    myReserves.push(pokemon);
+
+    localStorage.setItem('myReserves', JSON.stringify(myReserves));
+  }
+}
 
 
 
@@ -253,6 +287,70 @@ myTeam.forEach((pokemon, index) => {
 		displayIncompleteTeamText();
 	}
 };
+
+
+//Reserver
+
+const displayMyReserves = () => {
+  //Hämtar lagarrayen
+  const myReserves = JSON.parse(localStorage.getItem("myreserves")) || [];  
+
+
+  const reserveHeader = document.createElement('h1')
+  reserveHeader.classList.add('reserve-header')
+  reserveHeader.textContent = 'my reserves hehe'
+
+  reservesContainer.append(reserveHeader)
+
+  myReserves.forEach((pokemon, reservesContainer) => {
+    
+    const reserveCard = document.createElement("div");
+    reserveCard.classList.add("pokemoncard");
+
+    const reserveName = document.createElement("h2");
+    reserveName.textContent = pokemon.name;
+
+    const reserveTypeText = document.createElement('span')
+    reserveTypeText.innerHTML = "<b>Type: </b>" + pokemon.type;
+
+    const reserveImg = document.createElement('img')
+    reserveImg.src = pokemon.image;
+
+    const reserveAbilitiesText = document.createElement('span');
+    reserveAbilitiesText.innerHTML = "<b>Abilities:</b> " + pokemon.abilities;
+
+    const removeFromReserves = document.createElement("button");
+    removeFromReserves.classList.add('addpokemon')
+    removeFromReserves.textContent = "Remove from reserves";
+
+    removeFromReserves.addEventListener("click", () => {
+      for (let i = myReserves.length - 1; i >= 0; i--) {
+        if (myReserves[i].name === pokemon.name) {
+          myReserves.splice(i, 1);
+          break;
+        }
+      }
+      reservesContainer.removeChild(reserveCard)
+      localStorage.setItem("myReserves", JSON.stringify(myReserves));
+      // reserveCard.remove();
+      
+    });
+
+    
+    
+    reserveCard.append(reserveImg);
+    reserveCard.append(reserveName);
+    reserveCard.append(reserveTypeText);
+    reserveCard.append(reserveAbilitiesText);
+    reserveCard.append(removeFromReserves);
+    
+    reservesContainer.append(reserveCard);
+
+  });
+}
+
+
+
 
 // Hjälpfunktioner för att lägga till meddelanden till DOM
 
