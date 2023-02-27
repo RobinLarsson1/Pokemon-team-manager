@@ -85,7 +85,7 @@ button{
 	margin: 2em;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: flex-start;
 	align-items: center;
 	width: 17em;
 	background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
@@ -137,6 +137,9 @@ img{
 	font-weight: bold;
 	background-color: #3368B1;
 	color: #FFCB05;
+}
+.standard-pokemon {
+	justify-content: flex;
 }
 .addpokemon:hover, .removefromteam:hover {
 	background-color: #FFCB05;

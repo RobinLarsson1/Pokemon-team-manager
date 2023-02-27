@@ -45,7 +45,7 @@ const displayPokemon = () => {
 
     pokemonList.forEach((pokemon) => {
         const pokemonDiv = document.createElement('div');
-        pokemonDiv.classList.add('pokemoncard');
+        pokemonDiv.classList.add('pokemoncard', 'standard-pokemon');
 
         const pokemonName = document.createElement('h2');
         pokemonName.textContent = pokemon.name;
@@ -157,30 +157,52 @@ fetchPokemon();
 
 findPokemonInput.addEventListener('input', async (event) => {
 
-        const searchString = findPokemonInput.value;
-        pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+  const searchString = findPokemonInput.value;
+  pokemonList = JSON.parse(localStorage.getItem('pokemonList'));
+  const myTeam = JSON.parse(localStorage.getItem('myTeam')) || [];
 
-        const matchingPokemon = pokemonList.filter(pokemon => pokemon.name.includes(searchString));
+  const matchingPokemon = pokemonList.filter(pokemon => pokemon.name.includes(searchString));
 
-        // Rensar diven som de ligger i
-        pokemonContainer.innerHTML = '';
+  // Rensar diven som de ligger i
+  pokemonContainer.innerHTML = '';
 
-        // Skapar ny div och appendar resultatet av sökningen
-        matchingPokemon.forEach(pokemon => {
-            const pokemonDiv = document.createElement('div');
-            pokemonDiv.setAttribute('class', 'pokemoncard')
-            pokemonDiv.innerHTML = 
-            `<h2>${pokemon.name}</h2>
-            <img src="${pokemon.image}" alt="${pokemon.name}">
-            <p><b>Type:</b> ${pokemon.type}</p>
-            <p><b>Ability:</b> ${pokemon.abilities}</p> 
-			      <button class="addpokemon"> Add pokemon to team </button>`;
+  // Skapar ny div och appendar resultatet av sökningen
+  matchingPokemon.forEach(pokemon => {
+    const pokemonDiv = document.createElement('div');
+    pokemonDiv.setAttribute('class', 'pokemoncard')
+    pokemonDiv.innerHTML = 
+    `<h2>${pokemon.name}</h2>
+    <img src="${pokemon.image}" alt="${pokemon.name}">
+    <p><b>Type:</b> ${pokemon.type}</p>
+    <p><b>Ability:</b> ${pokemon.abilities}</p> 
+    <button class="addpokemon"> Add pokemon to team </button>`;
 
-            pokemonContainer.append(pokemonDiv);
+    pokemonContainer.append(pokemonDiv);
 
-			      const addButton = pokemonDiv.querySelector('.addpokemon');
-            addButton.addEventListener('click', () => {
-            addPokemonToTeam(pokemon);
+    const addButton = pokemonDiv.querySelector('.addpokemon');
+    addButton.addEventListener('click', () => {
+      if (myTeam.length < 3) {
+        addPokemonToTeam(pokemon);
+        myTeam.push(pokemon);
+        localStorage.setItem('myTeam', JSON.stringify(myTeam));
+        let addedToTeam = document.createElement('p');
+        addedToTeam.classList.add('added-text');
+        addedToTeam.textContent = 'Added to team!';
+        addedToTeam.style.color = 'Green'
+        pokemonDiv.append(addedToTeam);
+        setTimeout(() => {
+          addedToTeam.remove();
+        }, 1000);
+      } else {
+        let teamFull = document.createElement('p');
+        teamFull.classList.add('added-text');
+        teamFull.textContent = 'Your team is full!';
+        teamFull.style.color = 'red'
+        pokemonDiv.append(teamFull);
+        setTimeout(() => {
+          teamFull.remove();
+        }, 1000);
+      }
     });
         });
     }
