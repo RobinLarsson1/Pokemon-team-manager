@@ -11,6 +11,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 	<title>Pokemon team manager</title>
 </head>
 <body>
@@ -23,7 +24,6 @@
 		<div id="header-buttons">
 		<button id="find-champions">Find champions</button>
 		<button id="team-pokemons">My team</button>
-		<button id="reserve-pokemons">My reserves</button>
 	</div>
 	</header>
 	<section id="choose-pokemons">
@@ -35,8 +35,11 @@
 	</div>
 	</section>
 	<section id="pokediv" class="pokediv">
-		<div id="main-container"></div>
-		<div id="reserves-container"></div>
+		<div id="main-container" class="show-pokemon">
+			<div id="btn-div"></div>
+		</div>
+		<div id="reserve-h1" class="reserves-header"></div>
+		<div id="reserves-container" class="show-pokemon"></div>
 </section>
 	<section id="my-team">
 		<div class="champion">

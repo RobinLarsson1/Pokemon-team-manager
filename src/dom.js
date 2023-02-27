@@ -9,7 +9,9 @@ const pokeOl = document.getElementById('pokeol')
 const findPokemonInput = document.getElementById('search-bar')
 const pokemonContainer = document.getElementById('main-container');
 const reservesContainer = document.getElementById('reserves-container')
-const reservePokemons = document.getElementById('reserve-pokemons')
+const reserveH1 = document.getElementById('reserve-h1')
+const buttonDiv = document.getElementById('btn-div')
+
 
 
 //Gör så att det laddas in vid load
@@ -22,17 +24,15 @@ window.addEventListener('load', function() {
 myTeamButton.addEventListener('click', () => {
 	findPokemonInput.style.visibility = "hidden"
 	myTeamSection.style.visibility = "visible"
-	displayMyTeam();
+  displayMyTeam();
+  displayMyReserves();
 })
 findChampionButton.addEventListener('click', () => {
 	findPokemonInput.style.visibility = "visible"
-	myTeamSection.style.visibility = "hidden"
+	// myTeamSection.style.visibility = "hidden"
 	displayPokemon();
 })
-reservePokemons.addEventListener('click', () => {
-  myTeamSection.style.visibility = "visible"
-  displayMyReserves();
-})
+
 
 
 //skapar dynamiskt divvar med all info
@@ -77,7 +77,7 @@ const displayPokemon = () => {
                 let addedToTeam = document.createElement('p');
                 addedToTeam.classList.add('added-text');
                 addedToTeam.textContent = 'Added to team!';
-				addedToTeam.style.color = 'Green'
+				        addedToTeam.style.color = 'Green'
                 pokemonDiv.append(addedToTeam);
                 setTimeout(() => {
                     addedToTeam.remove();
@@ -86,7 +86,7 @@ const displayPokemon = () => {
                 let teamFull = document.createElement('p');
                 teamFull.classList.add('added-text');
                 teamFull.textContent = 'Your team is full!';
-				teamFull.style.color = 'red'
+				        teamFull.style.color = 'red'
                 pokemonDiv.append(teamFull);
                 setTimeout(() => {
                     teamFull.remove();
@@ -98,17 +98,19 @@ const displayPokemon = () => {
           addPokemonToReserves(pokemon)
           myReserves.push(pokemon)
           localStorage.setItem('myReserves', JSON.stringify(myReserves))
+          let addedToTeam = document.createElement('p');
+                addedToTeam.classList.add('added-text');
+                addedToTeam.textContent = 'Added as reserve!';
+				        addedToTeam.style.color = 'Green'
+                pokemonDiv.append(addedToTeam);
+                setTimeout(() => {
+                  addedToTeam.remove();
+              }, 1000);
           
       });
 
-        pokemonDiv.append(pokemonImg);
-        pokemonDiv.append(pokemonName);
-        pokemonDiv.append(pokemonTypeText);
-        pokemonDiv.append(abilitiesText);
-        pokemonDiv.append(buttonDiv)
-        buttonDiv.append(pokeAdd)
-        buttonDiv.append(reserveAdd)
-
+        pokemonDiv.append(pokemonImg, pokemonName, pokemonTypeText, abilitiesText, buttonDiv, pokeAdd)
+        buttonDiv.append(pokeAdd, reserveAdd)
         pokemonContainer.append(pokemonDiv);
     });
 };
@@ -145,9 +147,13 @@ const fetchPokemon = () => {
 	}
 };
 
+
+
 // Kallar på funktionen för att hämta samt spara data
 fetchPokemon();
 
+
+//sökfunktionen
 
 findPokemonInput.addEventListener('input', async (event) => {
 
@@ -168,11 +174,11 @@ findPokemonInput.addEventListener('input', async (event) => {
             <img src="${pokemon.image}" alt="${pokemon.name}">
             <p><b>Type:</b> ${pokemon.type}</p>
             <p><b>Ability:</b> ${pokemon.abilities}</p> 
-			<button class="addpokemon"> Add pokemon to team </button>`;
+			      <button class="addpokemon"> Add pokemon to team </button>`;
 
             pokemonContainer.append(pokemonDiv);
 
-			const addButton = pokemonDiv.querySelector('.addpokemon');
+			      const addButton = pokemonDiv.querySelector('.addpokemon');
             addButton.addEventListener('click', () => {
             addPokemonToTeam(pokemon);
     });
@@ -182,40 +188,25 @@ findPokemonInput.addEventListener('input', async (event) => {
 
 //lägger till pokemons i separat LS
 const addPokemonToTeam = (pokemon) => {
-	let myTeam = JSON.parse(localStorage.getItem('myTeam')) || [];
+  const myTeam = JSON.parse(localStorage.getItem('myTeam')) || [];
+  myTeam.push(pokemon);
+  localStorage.setItem('myTeam', JSON.stringify(myTeam));
+};
 
-	// Kollar om pokemonen redan finns i laget
-	if (Object.keys(myTeam).length < 3) {
-		if (!myTeam[pokemon.name]) {
-		  // Add the pokemon object to myTeamList object using the pokemon name as the key
-		    myTeam[pokemon.name] = pokemon;
-		}
-	
-	// Lägger till pokemon till lagArrayen
-	myTeam.push(pokemon);
-
-	// Sparar lagarrayen i LS
-	localStorage.setItem('myTeam', JSON.stringify(myTeam));
-
-	
-}};
 
 
 //lägger till i reserver
 const addPokemonToReserves = (pokemon) => {
-  let myReserves = JSON.parse(localStorage.getItem('myReserves')) || [];
-  if (!myReserves[pokemon.name]) {
-    myReserves[pokemon.name] = pokemon;
-
-    myReserves.push(pokemon);
-
-    localStorage.setItem('myReserves', JSON.stringify(myReserves));
-  }
-}
+  const myReserves = JSON.parse(localStorage.getItem('myReserves')) || [];
+  myReserves.push(pokemon);
+  localStorage.setItem('myReserves', JSON.stringify(myReserves));
+};
 
 
 
 
+
+//visar laget på rätt sida
 const displayMyTeam = () => {
   // Hämta lagarrayen från
 const myTeam = JSON.parse(localStorage.getItem("myTeam")) || [];
@@ -236,7 +227,29 @@ myTeam.forEach((pokemon, index) => {
     pokemonDiv.classList.add("pokemoncard");
 
     const pokemonName = document.createElement("h2");
+    pokemonName.classList.add("pokemon-name");
     pokemonName.textContent = pokemon.name;
+
+    const editIcon = document.createElement("i");
+    editIcon.innerHTML = ('<i class="ri-pencil-fill"></i>')
+    editIcon.classList.add("name-edit");
+
+    //Gör så att man kan välja namn på lagmedlemmarna 
+    editIcon.addEventListener("click", () => {
+        const inputField = document.createElement("input");
+        inputField.type = "text";
+        inputField.value = pokemonName.textContent;
+        inputField.addEventListener("keydown", (event) => {
+          if (event.key === 'Enter') {
+            pokemon.name = inputField.value;
+            pokemonName.textContent = inputField.value;
+            localStorage.setItem("myTeam", JSON.stringify(myTeam));
+            inputField.replaceWith(pokemonName);
+          }
+        });
+        pokemonName.replaceWith(inputField);
+        inputField.focus();
+    });
 
     const pokemonTypeText = document.createElement('span')
     pokemonTypeText.innerHTML = "<b>Type: </b>" + pokemon.type;
@@ -267,11 +280,53 @@ myTeam.forEach((pokemon, index) => {
     }
     });
 
+
+
+//knapparna ska in i en div som ska appendas där knapparna gör det nu
+
+
+
+
+
+
+  let orderButtonDiv = document.createElement('div')
+  orderButtonDiv.classList.add('order-buttons')
+
+
+
+    //Knappar för att flytta i ordningen i laget
+    let upButton = document.createElement("button");
+    upButton.setAttribute('class', 'upButton')
+    upButton.innerHTML = ('<i class="ri-arrow-left-line"></i>');
+    upButton.addEventListener("click", function () {
+    let prevSibling = pokemonDiv.previousElementSibling;
+    if (prevSibling !== null) {
+        pokemonContainer.insertBefore(pokemonDiv, prevSibling);
+    }
+});
+
+
+//Knappar för att flytta i ordningen i laget
+let downButton = document.createElement("button");
+downButton.setAttribute('class', 'downButton')
+downButton.innerHTML = ('<i class="ri-arrow-right-line"></i>');
+downButton.addEventListener("click", function () {
+    let nextSibling = pokemonDiv.nextElementSibling;
+    if (nextSibling !== null) {
+        pokemonContainer.insertBefore(nextSibling, pokemonDiv);
+    }
+});
+   
     pokemonDiv.append(pokemonImg);
+    pokemonDiv.append(editIcon)
     pokemonDiv.append(pokemonName);
     pokemonDiv.append(pokemonTypeText);
     pokemonDiv.append(abilitiesText);
     pokemonDiv.append(removeFromTeam);
+    pokemonDiv.append(orderButtonDiv)
+    orderButtonDiv.append(downButton)
+    orderButtonDiv.append(upButton)
+
 
     pokemonContainer.append(pokemonDiv);
 });
@@ -286,68 +341,81 @@ myTeam.forEach((pokemon, index) => {
 	if (myTeam.length > 0 && myTeam.length < 3) {
 		displayIncompleteTeamText();
 	}
+  
 };
 
 
 //Reserver
 
 const displayMyReserves = () => {
-  //Hämtar lagarrayen
-  const myReserves = JSON.parse(localStorage.getItem("myreserves")) || [];  
+  // Hämta lagarrayen från
+const myReserves = JSON.parse(localStorage.getItem("myReserves")) || [];
+reservesContainer.innerHTML = "";
+  // Rensar content som ligger i diven innan
+
+let divider = document.createElement('hr')
+divider.classList.add('reserve-line')
+
+const reserveHeader = document.createElement('h1')
+reserveHeader.classList.add('reserves-header')
+reserveHeader.textContent = 'My reserves'
 
 
-  const reserveHeader = document.createElement('h1')
-  reserveHeader.classList.add('reserve-header')
-  reserveHeader.textContent = 'my reserves hehe'
+reservesContainer.append(divider)
 
-  reservesContainer.append(reserveHeader)
 
-  myReserves.forEach((pokemon, reservesContainer) => {
-    
-    const reserveCard = document.createElement("div");
-    reserveCard.classList.add("pokemoncard");
+reservesContainer.append(reserveHeader)
 
-    const reserveName = document.createElement("h2");
-    reserveName.textContent = pokemon.name;
+  // Loopar genom de pokemon i myteam och displayar dom
+myReserves.forEach((pokemon, index) => {
 
-    const reserveTypeText = document.createElement('span')
-    reserveTypeText.innerHTML = "<b>Type: </b>" + pokemon.type;
+    const pokemonDiv = document.createElement("div");
+    pokemonDiv.classList.add("pokemoncard");
 
-    const reserveImg = document.createElement('img')
-    reserveImg.src = pokemon.image;
+    const pokemonName = document.createElement("h2");
+    pokemonName.textContent = pokemon.name;
 
-    const reserveAbilitiesText = document.createElement('span');
-    reserveAbilitiesText.innerHTML = "<b>Abilities:</b> " + pokemon.abilities;
+    const pokemonTypeText = document.createElement('span')
+    pokemonTypeText.innerHTML = "<b>Type: </b>" + pokemon.type;
 
-    const removeFromReserves = document.createElement("button");
-    removeFromReserves.classList.add('addpokemon')
-    removeFromReserves.textContent = "Remove from reserves";
+    const pokemonImg = document.createElement('img')
+    pokemonImg.src = pokemon.image;
 
-    removeFromReserves.addEventListener("click", () => {
-      for (let i = myReserves.length - 1; i >= 0; i--) {
+
+    const abilitiesText = document.createElement('span');
+    abilitiesText.innerHTML = "<b>Abilities:</b> " + pokemon.abilities;
+
+    const removeFromTeam = document.createElement("button");
+    removeFromTeam.classList.add('addpokemon')
+    removeFromTeam.textContent = "Remove from Reserves";
+
+    removeFromTeam.addEventListener("click", () => {
+    for (let i = myReserves.length - 1; i >= 0; i--) {
         if (myReserves[i].name === pokemon.name) {
-          myReserves.splice(i, 1);
-          break;
+        myReserves.splice(i, 1);
+        break;
         }
-      }
-      reservesContainer.removeChild(reserveCard)
-      localStorage.setItem("myReserves", JSON.stringify(myReserves));
-      // reserveCard.remove();
-      
+    }
+    reservesContainer.removeChild(pokemonDiv);
+    localStorage.setItem("myReserves", JSON.stringify(myReserves));
+      // Kontrollera om vi nu har ett tomt lag och lägg till meddelandet om det är fallet
     });
 
-    
-    
-    reserveCard.append(reserveImg);
-    reserveCard.append(reserveName);
-    reserveCard.append(reserveTypeText);
-    reserveCard.append(reserveAbilitiesText);
-    reserveCard.append(removeFromReserves);
-    
-    reservesContainer.append(reserveCard);
+    pokemonDiv.append(pokemonImg);
+    pokemonDiv.append(pokemonName);
+    pokemonDiv.append(pokemonTypeText);
+    pokemonDiv.append(abilitiesText);
+    pokemonDiv.append(removeFromTeam);
 
-  });
-}
+    reservesContainer.append(pokemonDiv);
+});
+
+  // Kontrollera om vi har mindre än tre pokemon i laget och lägg till meddelandet om det är fallet
+  
+  // Kontrollera om laget är tomt och lägg till meddelandet om det är fallet
+  
+};
+
 
 
 
@@ -388,4 +456,5 @@ easterEgg.addEventListener('click', function() {
   });
 
 
-//om display pokemon körs, 
+//försök på byta plats 
+

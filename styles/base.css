@@ -40,6 +40,14 @@ h2 {
 	text-shadow: #2B292C;
 }
 /* hero-section */
+#main-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
 #choose-pokemons{
 	display: flex;
 	justify-content: center;
@@ -59,21 +67,25 @@ button{
 .removefromteam{
 	color: red;
 }
+
 #pokediv {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 }
-#reserve-container {
+#reserves-container {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 .pokemoncard{
 	margin: 2em;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: space-around;
 	align-items: center;
 	width: 17em;
 	background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
@@ -93,6 +105,10 @@ hr{
 	background-color: #3368B1;
 	
 }
+.reserve-line {
+	width: 75vw;
+	margin-top: 2em;
+}
 #pokeball {
 	height: 4em;
 	width: 4em;
@@ -103,7 +119,7 @@ hr{
 	align-items: center;
 }
 .pokemoncard > p, span {
-    margin: 0.5em;
+    margin: 0.25em;
 	color: #2B292C;
 	text-align: center;
 	text-transform: capitalize;
@@ -117,7 +133,7 @@ img{
 }
 
 .addpokemon, .removefromteam {
-	margin-top: 0.75em;
+	margin-top: 10px;
 	font-weight: bold;
 	background-color: #3368B1;
 	color: #FFCB05;
@@ -125,6 +141,24 @@ img{
 .addpokemon:hover, .removefromteam:hover {
 	background-color: #FFCB05;
 	color: #3368B1;
+}
+.order-buttons {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	width: 100%;
+
+}
+.ri-arrow-left-line, .ri-arrow-right-line {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+.ri-pencil-fill {
+	font-size: 20px;
+	cursor: pointer;
 }
 .team-header {
 	font-size: 32px;
@@ -136,6 +170,20 @@ img{
     top: 22%;
 	color:#3368B1;
 }
+.reserves-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 32px;
+	width: 100%;
+	letter-spacing: 1px;
+	color:#3368B1;
+	margin-top: 1em;
+}
+.downButton, .upbutton {
+	display: flex;
+	flex-direction: row;
+}
 #easteregg {
 	position: absolute;
 	left: 47.5%;
@@ -146,6 +194,7 @@ img{
 }
 .added-text {
 	font-weight: bold;
+	
 }
 
 .empty-team-text{
@@ -159,7 +208,9 @@ img{
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: center;
+		width: 100%;
 	}
+	
 	#headline {
 		width: 15em;
 	}
