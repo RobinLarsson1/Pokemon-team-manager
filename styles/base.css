@@ -65,27 +65,44 @@ h2 {
 #search {
 	margin: 1em;
 }
-.content__link-top {
+#to-top {
 	position: fixed;
-    margin-left: 1em;
-    font-size: 1.25em;
-	border-radius: 2px;
-	font-size: 800;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 3em;
+	font-weight: 500;
 	text-decoration: none;
-    background-color: #3368B1;
-	color: #FFCB05;
+	color: #3368B1;
 	padding: 0.25em 0.5em;
-    bottom:1em;
+    bottom: 0;
     z-index: 2;
 	left: 0;
+	transition: all 0.5s;
 }
 
+
+#back-to-top-text {
+	
+	transition: visibility 0s, opacity 0.5s ease;
+	font-size: 16px;
+	font-weight: bold;
+}
+#back-to-top-text:hover {
+	visibility: visible;
+    
+} 
 button {
 	padding: 0.25em 0.5em;
 	cursor: pointer;
 	transition: all 0.5s;
 	border-radius: 0.25em;
 	border: 2px solid #3368B1;
+}
+#find-champions:hover, #team-pokemons:hover {
+    background-color: #3368B1;
+	color: #FFCB05;
 }
 
 .removefromteam {
@@ -179,10 +196,15 @@ img {
 	font-weight: bold;
 	background-color: #3368B1;
 	color: #FFCB05;
+	transition: all 0.5s;
 }
 
 .pokereserve {
 	font-weight: bold;
+	transition: all 0.5s;
+}
+.pokereserve:hover {
+	background-color: #b5b5b5;
 }
 
 .standard-pokemon {
@@ -193,6 +215,7 @@ img {
 .removefromteam:hover {
 	background-color: #FFCB05;
 	color: #3368B1;
+	font-weight: bold;
 }
 
 .order-buttons {
@@ -227,6 +250,7 @@ img {
 	transform: translate(-50%, -50%);
 	top: 22%;
 	color: #3368B1;
+	text-align: center;
 }
 
 .reserves-header {
@@ -264,8 +288,16 @@ img {
 .empty-team-text {
 	font-size: 32px;
 	margin-top: 3em;
+	text-align: center;
 }
-
+@media screen and (max-width: 690px) {
+	.ri-arrow-left-line {
+		rotate: 90deg;
+	}
+	.ri-arrow-right-line {
+		rotate: 90deg;
+	}
+}
 @media screen and (max-width: 500px) {
 	#headline {
 		width: 12em;
@@ -308,10 +340,8 @@ img {
 		font-size: 20px;
 		text-align: center;
 	}
-	.ri-arrow-left-line {
-		rotate: 90deg;
-	}
-	.ri-arrow-right-line {
-		rotate: 90deg;
+	
+	#to-top {
+		color:#090909;
 	}
 }

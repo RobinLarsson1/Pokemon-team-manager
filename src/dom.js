@@ -18,11 +18,24 @@ const myTeamButton = document.getElementById('team-pokemons')
 const findPokemonInput = document.getElementById('search-bar')
 const pokemonContainer = document.getElementById('main-container');
 const reservesContainer = document.getElementById('reserves-container')
-
+const backToTop = document.getElementById('to-top')
+const backToTopText = document.getElementById('back-to-top-text')
 
 export { pokemonContainer }
 export { reservesContainer }
 
+backToTopText.style.opacity = "0"
+
+backToTop.addEventListener('mouseenter', (event) => {
+  backToTopText.style.opacity = "1";
+  backToTopText.style.transition = "opacity 0.5s ease;"
+})
+backToTop.addEventListener('mouseleave', (event) => {
+  backToTopText.style.transition = "opacity 0.5s ease;"
+  backToTopText.style.opacity = "0";
+
+  
+})
 
 //Gör så att det laddas in vid load
 window.addEventListener('load', function () {
@@ -50,7 +63,7 @@ const fetchPokemon = () => {
   const baseUrl = 'https://pokeapi.co/api/v2/pokemon/';
   const pokemonList = [];
 
-  for (let i = 1; i <= 151; i++) {
+  for (let i = 1; i <= 386; i++) {
     const url = `${baseUrl}${i}`;
     fetch(url)
       .then(response => response.json())
@@ -145,7 +158,7 @@ findPokemonInput.addEventListener('input', async (event) => {
           teamFull.remove();
         }, 1000);
       }
-    });
+    })
     reserveAdd.addEventListener('click', () => {
       addPokemonToReserves(pokemon)
       myReserves.push(pokemon)
@@ -179,8 +192,6 @@ easterEgg.addEventListener('click', function () {
   easterEgg.style.visibility = "hidden";
   pokeBall.style.visibility = "visible";
 });
-
-
 
 
 //försök på byta plats 
