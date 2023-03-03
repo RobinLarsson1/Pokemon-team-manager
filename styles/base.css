@@ -310,6 +310,10 @@ img {
 	#back-to-top-tex {
     opacity: 1;
 	}
+	.team-header {
+		font-size: 24px;
+		margin-top: 0.75em;
+	}
 }
 
 @media screen and (max-width: 500px) {
