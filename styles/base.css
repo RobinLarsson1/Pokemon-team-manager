@@ -52,7 +52,7 @@ h2 {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	top: 22%;
+	top: 23%;
 	color: #3368B1;
 	text-align: center;
 	
@@ -313,7 +313,7 @@ img {
 	}
 	.team-header {
 		font-size: 24px;
-		margin-top: 1em;
+		
 	}
 }
 
@@ -353,7 +353,7 @@ img {
 
 	.team-header {
 		font-size: 24px;
-		margin-top: 0.5em;
+		top: 24%;
 	}
 
 	.empty-team-text {
