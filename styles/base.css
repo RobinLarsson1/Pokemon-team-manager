@@ -266,11 +266,11 @@ img {
 
 #easteregg {
 	position: absolute;
-	top: 30%;
+	top: 32%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	visibility: hidden;
-	height: 8em;
+	height: 7em;
 	width: auto;
 }
 
@@ -307,6 +307,9 @@ img {
 	.ri-arrow-right-line {
 		rotate: 90deg;
 	}
+	#back-to-top-tex {
+    opacity: 1;
+	}
 }
 
 @media screen and (max-width: 500px) {
@@ -340,11 +343,12 @@ img {
 
 	#easteregg {
 		height: 5em;
-		top: 28%;
+		top: 31%;
 	}
 
 	.team-header {
 		font-size: 24px;
+		margin-top: 0.5em;
 	}
 
 	.empty-team-text {

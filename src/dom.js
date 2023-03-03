@@ -26,6 +26,10 @@ export { reservesContainer }
 
 backToTopText.style.opacity = "0"
 
+backToTop.addEventListener('click', () => {
+  backToTopText.style.opacity = "0";
+})
+
 backToTop.addEventListener('mouseenter', (event) => {
   backToTopText.style.opacity = "1";
   backToTopText.style.transition = "opacity 0.5s ease;"
