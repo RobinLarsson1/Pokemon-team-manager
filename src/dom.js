@@ -6,11 +6,6 @@ import { addPokemonToReserves } from './display.js'
 
 
 
-
-
-
-
-
 //Variabler
 const myTeamSection = document.getElementById('my-team')
 const findChampionButton = document.getElementById('find-champions')

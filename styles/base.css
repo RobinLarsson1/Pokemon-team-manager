@@ -52,7 +52,7 @@ h2 {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	top: 17%;
+	top: 23%;
 	color: #3368B1;
 	text-align: center;
 	
@@ -267,11 +267,11 @@ img {
 
 #easteregg {
 	position: absolute;
-	top: 21%;
+	top: 30%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	visibility: hidden;
-	height: 7em;
+	height: 6em;
 	width: auto;
 }
 
