@@ -34,7 +34,7 @@ backToTop.addEventListener('mouseleave', (event) => {
   backToTopText.style.transition = "opacity 0.5s ease;"
   backToTopText.style.opacity = "0";
 
-  
+
 })
 
 //Gör så att det laddas in vid load
@@ -133,7 +133,7 @@ findPokemonInput.addEventListener('input', async (event) => {
     buttonDiv.append(pokeAdd, reserveAdd)
     pokemonContainer.append(pokemonDiv);
 
-
+    //Lägger till i laget om det inte är fullt
     const addButton = pokemonDiv.querySelector('.addpokemon');
     addButton.addEventListener('click', () => {
       if (myTeam.length < 3) {
@@ -192,7 +192,3 @@ easterEgg.addEventListener('click', function () {
   easterEgg.style.visibility = "hidden";
   pokeBall.style.visibility = "visible";
 });
-
-
-//försök på byta plats 
-

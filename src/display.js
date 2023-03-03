@@ -115,7 +115,7 @@ const displayMyTeam = () => {
 		const editIcon = document.createElement("i");
 		editIcon.innerHTML = ('<i class="ri-pencil-fill"></i>')
 		editIcon.setAttribute("title", "Edit name");
-		
+
 
 		//Gör så att man kan välja namn på lagmedlemmarna 
 		editIcon.addEventListener("click", () => {
