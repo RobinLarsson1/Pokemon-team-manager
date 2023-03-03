@@ -52,7 +52,7 @@ h2 {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	top: 23%;
+	top: 17%;
 	color: #3368B1;
 	text-align: center;
 	
@@ -267,7 +267,7 @@ img {
 
 #easteregg {
 	position: absolute;
-	top: 30%;
+	top: 21%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	visibility: hidden;
@@ -313,7 +313,6 @@ img {
 	}
 	.team-header {
 		font-size: 24px;
-		
 	}
 }
 
@@ -348,12 +347,12 @@ img {
 
 	#easteregg {
 		height: 5em;
-		top: 31%;
+		top: 21%;
 	}
 
 	.team-header {
 		font-size: 24px;
-		top: 24%;
+		
 	}
 
 	.empty-team-text {
